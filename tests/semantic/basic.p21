@@ -1,0 +1,11 @@
+package p21
+
+use p21@npinto21/p21-sqlite@v1 as sqlite
+
+db := sqlite.Open({
+    path: "./.recovery/modules/npinto21/sqlite/tests/db/basic_semantic.db"
+})
+state := sqlite.State(db)
+sqlite.Close(db)
+
+_state := state

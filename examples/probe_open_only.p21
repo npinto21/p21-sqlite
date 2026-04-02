@@ -1,0 +1,13 @@
+package p21
+
+use p21@npinto21/p21-sqlite@v1 as sqlite
+use p21.db as db
+
+pool := db.Open(sqlite, {
+    path: "./.recovery/modules/npinto21/sqlite/examples/db/sqlite_probe_open_only.db",
+    busy_timeout: 5000,
+    max_open: 1,
+    max_idle: 1
+})
+
+@"driver=%db.DriverName(pool), kind=%db.Kind(pool)"\

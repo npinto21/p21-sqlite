@@ -1,0 +1,11 @@
+.DS_Store
+.p21/
+**/.p21/
+
+examples/db/*.db
+examples/db/*.sqlite
+tests/db/*.db
+tests/db/*.sqlite
+
+!examples/db/.gitkeep
+!tests/db/.gitkeep

@@ -1,0 +1,25 @@
+package p21
+
+use p21@npinto21/p21-sqlite@v1 as sqlite
+use p21.db as db
+
+pool := db.Open(sqlite, {
+    path: "./.recovery/modules/npinto21/sqlite/tests/db/provider_with_db_semantic.db",
+    busy_timeout: 5000,
+    max_open: 1,
+    max_idle: 1
+})
+
+driver := db.DriverName(pool)
+kind := db.Kind(pool)
+is_pool := db.IsPool(pool)
+state := db.State(pool)
+ping := db.Ping(pool)
+
+db.Close(pool)
+
+_driver := driver
+_kind := kind
+_is_pool := is_pool
+_state := state
+_ping := ping

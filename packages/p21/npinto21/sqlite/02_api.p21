@@ -1,0 +1,198 @@
+package p21.npinto21.sqlite
+
+use sqlite_native
+
+func RowsCount(rows: obj) : int {
+    return rows.count
+}
+
+func RowsItems(rows: obj) : array {
+    return rows.rows
+}
+
+func RowAt(rows: obj, index: int) : obj {
+    return rows.rows[index]
+}
+
+func HasRows(rows: obj) : bool {
+    return rows.has_rows
+}
+
+func FirstRow(rows: obj) : obj {
+    if (rows.has_rows) {
+        return rows.rows[0]
+    }
+    return {}
+}
+
+func Open(config: obj) : obj {
+    pool, err := sqlite_native.open(config)
+    if (err != null) error(err)
+    return pool
+}
+
+func Close(pool: obj) {
+    _, err := sqlite_native.close(pool)
+    if (err != null) error(err)
+}
+
+func Exec(target: obj, sql: string, params: array) : obj {
+    result, err := sqlite_native.exec(target, sql, params)
+    if (err != null) error(err)
+    return result
+}
+
+func TryExecCtx(ctx: obj, target: obj, sql: string, params: array) : obj {
+    result, err := sqlite_native.exec_ctx(ctx, target, sql, params)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func Query(target: obj, sql: string, params: array) : obj {
+    result, err := sqlite_native.query(target, sql, params)
+    if (err != null) error(err)
+    return result
+}
+
+func TryQueryCtx(ctx: obj, target: obj, sql: string, params: array) : obj {
+    result, err := sqlite_native.query_ctx(ctx, target, sql, params)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func QueryOne(target: obj, sql: string, params: array) : obj {
+    result, err := sqlite_native.query_one(target, sql, params)
+    if (err != null) error(err)
+    return result
+}
+
+func TryQueryOneCtx(ctx: obj, target: obj, sql: string, params: array) : obj {
+    result, err := sqlite_native.query_one_ctx(ctx, target, sql, params)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func Prepare(target: obj, sql: string) : obj {
+    stmt, err := sqlite_native.prepare(target, sql)
+    if (err != null) error(err)
+    return stmt
+}
+
+func ClosePrepared(stmt: obj) {
+    _, err := sqlite_native.close_prepared(stmt)
+    if (err != null) error(err)
+}
+
+func ExecPrepared(stmt: obj, params: array) : obj {
+    result, err := sqlite_native.exec_prepared(stmt, params)
+    if (err != null) error(err)
+    return result
+}
+
+func TryExecPreparedCtx(ctx: obj, stmt: obj, params: array) : obj {
+    result, err := sqlite_native.exec_prepared_ctx(ctx, stmt, params)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func QueryPrepared(stmt: obj, params: array) : obj {
+    result, err := sqlite_native.query_prepared(stmt, params)
+    if (err != null) error(err)
+    return result
+}
+
+func TryQueryPreparedCtx(ctx: obj, stmt: obj, params: array) : obj {
+    result, err := sqlite_native.query_prepared_ctx(ctx, stmt, params)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func QueryOnePrepared(stmt: obj, params: array) : obj {
+    result, err := sqlite_native.query_one_prepared(stmt, params)
+    if (err != null) error(err)
+    return result
+}
+
+func TryQueryOnePreparedCtx(ctx: obj, stmt: obj, params: array) : obj {
+    result, err := sqlite_native.query_one_prepared_ctx(ctx, stmt, params)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func Begin(pool: obj) : obj {
+    tx, err := sqlite_native.begin(pool)
+    if (err != null) error(err)
+    return tx
+}
+
+func Commit(tx: obj) {
+    _, err := sqlite_native.commit(tx)
+    if (err != null) error(err)
+}
+
+func Rollback(tx: obj) {
+    _, err := sqlite_native.rollback(tx)
+    if (err != null) error(err)
+}
+
+func State(target: obj) : obj {
+    state, err := sqlite_native.state(target)
+    if (err != null) error(err)
+    return state
+}
+
+func Ping(target: obj) : obj {
+    result, err := sqlite_native.ping(target)
+    if (err != null) error(err)
+    return result
+}
+
+func TryPingCtx(ctx: obj, target: obj) : obj {
+    result, err := sqlite_native.ping_ctx(ctx, target)
+    return {
+        ok: err == null,
+        value: result,
+        error: err
+    }
+}
+
+func HasError(err: obj) : bool {
+    return err != null
+}
+
+func ErrorKind(err: obj) : string {
+    if (err == null) return ""
+    return err.kind
+}
+
+func ErrorMessage(err: obj) : string {
+    if (err == null) return ""
+    return err.message
+}
+
+func ErrorSource(err: obj) : string {
+    if (err == null) return ""
+    return err.source
+}
+
+func Raise(err: obj) {
+    if (err != null) error(err)
+}

@@ -1,0 +1,13 @@
+package p21.npinto21.sqlite
+
+func DriverName() : string {
+    return "sqlite"
+}
+
+func PoolKind() : string {
+    return "sqlite.pool"
+}
+
+func TxKind() : string {
+    return "sqlite.tx"
+}

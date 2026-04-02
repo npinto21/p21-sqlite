@@ -1,0 +1,11 @@
+package p21
+
+use p21@npinto21/p21-sqlite@v1 as db
+
+conn := db.Open({
+    path: "./.recovery/modules/npinto21/sqlite/tests/db/alias_semantic.db"
+})
+state := db.State(conn)
+db.Close(conn)
+
+_state := state

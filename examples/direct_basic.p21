@@ -1,0 +1,26 @@
+package p21
+
+use p21@npinto21/p21-sqlite@v1 as sqlite
+
+pool := sqlite.Open({
+    path: "./.recovery/modules/npinto21/sqlite/examples/db/sqlite_direct_demo.db",
+    busy_timeout: 5000,
+    max_open: 1,
+    max_idle: 1
+})
+
+sqlite.Exec(pool, "create table if not exists items (id integer primary key, name text)", [])
+sqlite.Exec(pool, "delete from items", [])
+insert_result := sqlite.Exec(pool, "insert into items (name) values (?)", ["nuno"])
+row := sqlite.QueryOne(pool, "select id, name from items where name = ?", ["nuno"])
+state := sqlite.State(pool)
+
+@"driver=%state.driver, path=%state.path, open=%state.open"\
+@"rows_affected=%insert_result.rows_affected, last_insert_id=%insert_result.last_insert_id"\
+@"found=%row.found"\
+if (row.found) {
+    @"item.id=%1", row.row.id\
+    @"item.name=%1", row.row.name\
+}
+
+sqlite.Close(pool)
